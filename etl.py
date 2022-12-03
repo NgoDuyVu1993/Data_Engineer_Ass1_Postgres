@@ -47,8 +47,9 @@ def process_log_file(cur, filepath):
     for index, row in df.iterrows():
         
         # get songid and artistid from song and artist tables
-        cur.execute(song_select, (row.song, row.artist, row.length))
-        results = cur.fetchone()
+        if type(row.song) == str and type(row.artist) == str and type(row.length) == float:
+            cur.execute(song_select, (row.song, row.length, row.artist))
+            results = cur.fetchone()
         
         if results:
             songid, artistid = results
