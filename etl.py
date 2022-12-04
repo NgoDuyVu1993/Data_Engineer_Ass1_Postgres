@@ -6,6 +6,10 @@ from sql_queries import *
 
 
 def process_song_file(cur, filepath):
+    """
+    Function defines ETL process for a single Song file
+    The function reads a json file, extracting data from the columns, and storing it in the tables songs and artists
+    """
     # open song file
     df = pd.read_json(filepath, lines=True)
 
@@ -19,6 +23,11 @@ def process_song_file(cur, filepath):
 
 
 def process_log_file(cur, filepath):
+    """
+    Function defines ETL process for a single Log file
+    The function reads a json file, extracting data from the columns, and storing it in the tables users and time
+    After get the "NextSong" from log, function extract songid and artistid to store in songplays table
+    """
     # open log file
     df = pd.read_json(filepath, lines=True) 
 
@@ -62,6 +71,12 @@ def process_log_file(cur, filepath):
 
 
 def process_data(cur, conn, filepath, func):
+    """
+    Function perfroms on specific file path
+    Function does ETL processing on all of the files in the path
+    
+    """
+
     # get all files matching extension from directory
     all_files = []
     for root, dirs, files in os.walk(filepath):
